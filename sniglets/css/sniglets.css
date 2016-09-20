@@ -1,0 +1,146 @@
+@charset "utf-8";
+
+#creds, #login{
+    float:right;
+    text-align:right;
+    margin: 4px 8px;
+}
+#creds a, #login a{
+    text-decoration: none;
+    color: yellow;
+}
+
+#filler{
+    width: 300px;
+    min-height: 500px;
+    margin: 0 10px;
+}
+
+#find{
+    font-family: arial;
+    font-size: 12px;
+    text-align: center;
+    color: black;
+    margin: 4px 0;
+}
+
+#links{
+   margin: 10px 80px;
+   float: left;
+   color: silver;
+
+}
+#header{
+    display:none;
+    float:right;
+    width: 300px;
+    font-size: 13px;
+    font-family: Arial;
+    background: rgba(244, 255, 0, 0.48);
+    padding: 10px;
+    box-shadow: 5px 5px 5px #888888;
+
+}
+#formHeader{
+    background: #888888;
+    padding: 3px;
+    color: #D4DF00;
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    box-shadow: 0px 5px 5px #4b4b4b;
+}
+input:focus {
+    background-color: #D4FCDA;
+
+}
+#formArea, #searchBox {
+    float: left;
+    padding: 0 10px;
+    font-size: 12px;
+    font-family: Arial;
+}
+
+#formArea{
+
+}
+
+#resultArea {
+    float: left;
+    display:none;
+    margin: 20px 60px;
+    padding: 5px;
+    border: 1px solid #000000;
+    width: 700px;
+    box-shadow: 10px 10px 5px #888888;
+    background: rgba(244, 255, 0, 0.48);
+    font-size: 12px;
+    font-family: Arial;
+}
+#statistics{
+    margin: 2px 400px;
+    border: 1px solid #919db0;
+    padding: 5px;
+    box-shadow: 5px 5px 5px #888888;
+    width: 400px;
+    background: #d5d5d5;
+    font-size: 12px;
+    font-family: Arial;
+}
+#searchBox {
+    margin: 10px 100px;
+    width: 400px;
+}
+
+#listLink{
+    text-align: right;
+}
+#listLink a, #whatisit a, #links a{
+    text-decoration: none;
+    color: #696f82;
+    font-family: arial;
+}
+#listLink a:hover, #whatisit a:hover, #links a:hover{
+    text-decoration: underline;
+}
+#whatisit{
+    margin: 0 0 10px 0;
+    float: left;
+    padding: 0;
+}
+
+#listArea {
+    float: left;
+    display:none;
+    margin: 20px 10px;
+    padding: 0 10px;
+    border: 1px solid #000000;
+    width: 700px;
+    box-shadow: 10px 10px 5px #888888;
+    background: rgba(244, 255, 0, 0.48);
+
+}
+.listing {
+    margin: 8px 0;
+    font-size: 12px;
+    font-family: Arial;
+}
+#SnigletTxt {
+    width: 400px;
+    margin: 20px 0 0 400px;
+    border-bottom: 1px solid #ff6600;
+    padding: 8px 0;
+}
+#error {
+    background: url('../images/error_icon.gif');
+    background-repeat: no-repeat;
+    background-position: top left;
+    padding: 0 20px;
+    margin: 0 20px;
+}
+#success {
+    background: url('../images/success-icon.png');
+    background-repeat: no-repeat;
+    background-position: top left;
+    padding: 0 20px;
+    margin: 10px;
+}

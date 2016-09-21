@@ -5,26 +5,24 @@ $sniglet = new sniglet();
 
 
 
-if(isset($_SESSION['loggedin']))
-{
+if(isset($_SESSION['loggedin'])) {
 
     echo "You are already logged in, {$_SESSION['name']}.";
     die(' <a href="javascript: logout()")>Logout</a> or go <a href="sniglet_edit.php">back</a>');
 
 }
 // That bit of code checks if you are logged in or not, and if you are, you can't log in again!
-if(isset($_POST['submit']))
-{
+if(isset($_POST['submit'])) {
    $mysql = $sniglet->login($_POST);
-   if($mysql[0]['users_id'] < 1)
-   {
+   if($mysql[0]['users_id'] < 1) {
+
     die("Username or Password was incorrect! <a href=login.php>Try again</a> or <A href='sniglet_edit.php'>Go back...</A> ");
 
    } // That snippet checked to see if the number of rows the MySQL query was less than 1, so if it couldn't find a row, the password is incorrect or the user doesn't exist!
 
-   $_SESSION['loggedin'] = "YES"; // Set it so the user is logged in!
-   $_SESSION['name'] = $mysql[0]['users_name']; // Make it so the username can be called by $_SESSION['name']
-   $_SESSION['access'] = $mysql[0]['users_acessLevel'];
+   $_SESSION['loggedin']    = "YES"; // Set it so the user is logged in!
+   $_SESSION['name']        = $mysql[0]['users_name']; // Make it so the username can be called by $_SESSION['name']
+   $_SESSION['access']      = $mysql[0]['users_acessLevel'];
 
    redirect_to('sniglet_edit.php');
 

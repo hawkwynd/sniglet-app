@@ -8,11 +8,11 @@ var recordid
 $(function () {
     $.get('sniglet_edit.php?func=getStats', function (results) {
         var obj = jQuery.parseJSON(results);
-        var totalCountActive = 'Total Active Sniglets: ' + obj[0].activeCount;
+        var totalCountActive = 'Active Sniglets: ' + obj[0].activeCount;
         var verbCount = '<br/>Verbs: ' + obj[0].verbCount;
-        var nounCount = ' Nouns: ' + obj[0].nounCount;
-        var adjCount = ' Adjectives: ' + obj[0].adjCount + '<br/>';
-        var LastSnigTitle = '<br/>Last Sniglet Term: <i>' + obj[0].sniglet_term + '</i>';
+        var nounCount = '<br/>Nouns: ' + obj[0].nounCount;
+        var adjCount = ' <br/>Adjectives: ' + obj[0].adjCount + '<br/>';
+        var LastSnigTitle = '<br/>Last Sniglet Added: <i>' + obj[0].sniglet_term + '</i>';
         var LastRecDate = '<br/>Last Date Added: ' + obj[0].sniglet_date;
         $('#listArea').hide();
         $('#statistics').html(totalCountActive + verbCount + nounCount + adjCount + LastRecDate + LastSnigTitle);
@@ -86,14 +86,7 @@ function loadEditor(id) {
         $("#SnigletTxt").html('<b>' + myjson[0]['sniglet_term'] +'</b>' )
 
             .append(' (<i>' + myjson[0]['sniglet_phonetics'] +'</i>) ' + myjson[0]['sniglet_type'] + '<br/>')
-            .append(myjson[0]['sniglet_definition'] +'<br/>')
-
-
-        ;
-
-
-
-
+            .append(myjson[0]['sniglet_definition'] +'<br/>');
     });
 }
 
@@ -105,19 +98,28 @@ function list() {
         var string = '<dv class="listing_header"><p>Listing all ' + obj.length + ' records.</p></div>';
 
         $.each(obj, function (key, value) {
-            string += '<div class="listing"><b>' + value.sniglet_term + '</b>';
-
-            if(value.sniglet_phonetics){
-                string += '(<i>' + value.sniglet_phonetics + '</i>) ';
-            }
-
-            string += value.sniglet_type + ' - ' + value.sniglet_definition + '</div>';
+            string += '<div class="listing"><span class="lk" id=' + value.sniglet_id +'>' + value.sniglet_term + '</span> ' +
+                '(<i>' + value.sniglet_phonetics + '</i>)' +
+                value.sniglet_type + ' - ' +
+                value.sniglet_definition +
+                '</div>';
 
         });
+
+
         $('#header').fadeOut('slow');
         $('#resultArea').fadeOut();
         $('#searchTxt').val('');
         $('#listArea').fadeIn().html(string);
+
+        // Set listerner on our new list, for editing
+        $('.lk').click( function() {
+            // alert('You clicked on ID ' + $(this).attr('id') );
+            var id = $(this).attr('id');
+
+            loadEditor(id);
+
+        } );
     });
 }
 

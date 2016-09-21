@@ -81,7 +81,7 @@ class sniglet
     {
         $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
         $db->connect();
-        $sql = "Select sniglet_term, sniglet_phonetics, sniglet_type, sniglet_definition FROM " . TABLE_SNIGLETS .
+        $sql = "Select * FROM " . TABLE_SNIGLETS .
             " ORDER BY sniglet_term";
         return json_encode($db->fetch_all_array($sql));
     }

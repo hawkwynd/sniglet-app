@@ -3,7 +3,7 @@
 /**********************************************
  * Random snigletr Ajax Application
  * Database config file
- * scott fleming
+ * scott fleming http://www.musiccityguru.com
  * v1.0 - April 2011
  ***********************************************/
 
@@ -27,7 +27,8 @@ define('TABLE_SNIGLETS', $iniconfig['sniglet']['db_table']);
 class sniglet
 {
 
-    function logout() {
+    function logout()
+    {
         $_SESSION = array();
 
         // If it's desired to kill the session, also delete the session cookie.
@@ -44,18 +45,26 @@ class sniglet
         return;
     }
 
-
-    function login($login) {
+    /**
+     * @param $login
+     * @return array
+     */
+    function login($login)
+    {
         $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
         $db->connect();
         $name = mysql_real_escape_string($login['username']); // The function mysql_real_escape_string() stops hackers!
         $pass = md5($login['password']);
         $sql = "SELECT * FROM sniglet_users WHERE users_name = '{$name}' AND users_password = '{$pass}'";
+
         return $db->fetch_all_array($sql);
 
     }
 
-
+    /**
+     * @param $searchTxt
+     * @return array
+     */
     function searchSniglet($searchTxt)
     {
 
@@ -158,7 +167,11 @@ class sniglet
 
     }
 
-
+    /**
+     * @param $sniglet_id
+     * @param $vote
+     * @return string
+     */
     function castVote($sniglet_id, $vote)
     {
 
@@ -178,7 +191,7 @@ class sniglet
                 break;
         }
 
-            $db->query_update(TABLE_SNIGLETS, $data, "sniglet_id=$sniglet_id");
+        $db->query_update(TABLE_SNIGLETS, $data, "sniglet_id=$sniglet_id");
 
 
         // return with refreshed results
@@ -190,36 +203,43 @@ class sniglet
 
     }
 
+    /**
+     * @param $data
+     */
     function addSniglet($data)
     {
 
         $message = array();
         $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
         $db->connect();
+        $data['sniglet_term'] = mysql_real_escape_string($data['sniglet_term']);
+        $data['sniglet_phonetics'] = mysql_real_escape_string( $data['sniglet_phonetics']);
+        $data['sniglet_type'] = mysql_real_escape_string($data['sniglet_type']);
+        $data['sniglet_definition'] = mysql_real_escape_string($data['sniglet_definition']);
 
         $query = "insert into sniglets (sniglet_term,sniglet_phonetics,sniglet_type,sniglet_definition)
-                  select '". $data['sniglet_term'] . "',
-                  '" . $data['sniglet_phonetics'] ."',
-                  '" . $data['sniglet_type'] ."',
+                  select '" . $data['sniglet_term'] . "',
+                  '" . $data['sniglet_phonetics'] . "',
+                  '" . $data['sniglet_type'] . "',
                   '" . $data['sniglet_definition'] . "'
-                  FROM dual where not exists (SELECT * from sniglets where sniglet_term in ('" . $data['sniglet_term'] ."'))";
+                  FROM dual where not exists (SELECT * from sniglets where sniglet_term in ('" . $data['sniglet_term'] . "'))";
+
         $result = mysql_query($query);
         $primary_id = mysql_insert_id();
-
-        //$primary_id = $db->query_insert(TABLE_SNIGLETS, $data);
-
         $message['successMsg'] = "A new sniglet has been added to the database.\n";
         $message['ID'] = $primary_id;
         $message['sniglet_term'] = stripslashes($data['sniglet_term']);
         $message['sniglet_phonetics'] = stripslashes($data['sniglet_phonetics']);
         $message['sniglet_type'] = $data['sniglet_type'];
         $message['sniglet_definition'] = stripslashes($data['sniglet_definition']);
-
         echo json_encode($message);
 
     }
 
-
+    /**
+     * @param $sniglet_id
+     * @return string
+     */
     function approve_sniglet($sniglet_id)
     {
 
@@ -239,14 +259,14 @@ class sniglet
         $db->connect();
         $sql = "SELECT sniglet_id, sniglet_term  FROM " . TABLE_SNIGLETS . " WHERE isActive < 1";
         $record = $db->fetch_all_array($sql);
-
         $db->close();
 
         return $record;
     }
 
 
-    function makeLinks() {
+    function makeLinks()
+    {
         $out = '';
         $outTop = '<div id="find">Find Sniglets by letter</div>';
         $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
@@ -254,20 +274,32 @@ class sniglet
         $sql = "SELECT distinct LEFT(UCASE(sniglet_term), 1) as alpha  FROM sniglets ORDER by sniglet_term ASC";
 
         $row = $db->fetch_all_array($sql);
-        foreach($row as $record){
-            $out .= '| <a href="javascript:fetchAlpha(\''. $record['alpha'] .'\')">'. $record['alpha'].'</a> ';
+        foreach ($row as $record) {
+            $out .= '| <a href="javascript:fetchAlpha(\'' . $record['alpha'] . '\')">' . $record['alpha'] . '</a> ';
         }
 
-        return $outTop. substr( $out, 2);
+        return $outTop . substr($out, 2);
     }
 
-    function searchByAlpha($letter) {
+    /**
+     * @param $letter
+     * @return string
+     */
+    function searchByAlpha($letter)
+    {
         $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
         $db->connect();
-        $sql="SELECT * from sniglets where UCASE(LEFT(sniglet_term, 1)) in('". $letter. "')";
+        $sql = "SELECT * from sniglets where UCASE(LEFT(sniglet_term, 1)) in('" . $letter . "')";
         return json_encode($db->fetch_all_array($sql));
     }
 
+
+    function loadById($id) {
+        $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+        $db->connect();
+        $sql = "SELECT * from sniglets where sniglet_id=$id";
+        return json_encode($db->fetch_all_array($sql));
+    }
 
 }
 

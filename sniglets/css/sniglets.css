@@ -1,5 +1,8 @@
 @charset "utf-8";
 
+body{
+    width: 1420px;
+}
 #creds, #login{
     float:right;
     text-align:right;
@@ -18,15 +21,20 @@
 
 #find{
     font-family: arial;
-    font-size: 12px;
+    font-size: 14px;
     text-align: center;
     color: black;
     margin: 4px 0;
+    background: #d1d1d1;
+    padding: 4px;
+    border-bottom: 1px solid #a0a0a4;
 }
 
 #links{
-   margin: 10px 80px;
-   float: left;
+    clear:right;
+    float:left;
+   margin: 10px;
+   width: auto;
    color: silver;
 
 }
@@ -65,9 +73,10 @@ input:focus {
 }
 
 #resultArea {
+    clear: both;
     float: left;
     display:none;
-    margin: 20px 60px;
+    margin: 10px 300px;
     padding: 5px;
     border: 1px solid #000000;
     width: 700px;
@@ -110,8 +119,9 @@ input:focus {
 
 #listArea {
     float: left;
+    clear: both;
     display:none;
-    margin: 20px 10px;
+    margin: 20px 300px;
     padding: 0 10px;
     border: 1px solid #000000;
     width: 700px;
@@ -119,15 +129,35 @@ input:focus {
     background: rgba(244, 255, 0, 0.48);
 
 }
-.listing {
+.listing, .listing_header {
     margin: 8px 0;
     font-size: 12px;
     font-family: Arial;
 }
+.listing_header{ font-weight: 700 }
+
+.listing span{
+    text-decoration: none;
+    color: #000;
+    font-weight: 700;
+}
+
+.listing span::before{
+    content: " » ";
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.lk{cursor: pointer;}
+
+
 #SnigletTxt {
-    width: 400px;
-    margin: 20px 0 0 400px;
+    float: left;
+    width: 500px;
+    margin: 10px 0 10px 40px;
     border-bottom: 1px solid #ff6600;
+    border-top: 1px solid #ff6600;
+
     padding: 8px 0;
 }
 #error {

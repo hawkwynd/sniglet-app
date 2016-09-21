@@ -210,8 +210,7 @@ function query_update($table, $data, $where='1') {
 #-############################################# 
 # desc: does an insert query with an array 
 # param: table (no prefix), assoc array with data 
-# returns: id of inserted record, false if error
-
+# returns: id of inserted record, false if error 
 function query_insert($table, $data) { 
     $q="INSERT INTO `".$this->pre.$table."` "; 
     $v=''; $n=''; 

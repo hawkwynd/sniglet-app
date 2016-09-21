@@ -7,7 +7,7 @@ $sniglet = new sniglet();
 session_start();
 
 if(!isset($_SESSION['access'])){
-    //redirect_to('login.php');
+    redirect_to('login.php');
 }
 
 if(isset($_GET['func']) && $_GET['func'] == 'logout'){
@@ -26,9 +26,11 @@ elseif (isset($_GET) && $_GET['func'] == 'list') {
 
 }
 elseif (isset($_POST['func']) && $_POST['func'] == 'save') {
-    // check for duplicate record.
-
     die($sniglet->addSniglet($_POST));
+
+}
+elseif (isset($_POST['func']) && $_POST['func'] == 'load') {
+    die($sniglet->loadById($_POST['id']));
 
 }
 elseif (isset($_GET['func']) && $_GET['func'] == 'searchByAlpha') {
@@ -92,17 +94,9 @@ elseif (isset($_GET['func']) && $_GET['func'] == 'searchByAlpha') {
     concepts that have no "official" definitions.<a href="javascript: hideHeader()"> [close]</a>
 </div>
 <div id="statistics"></div>
-<div id="links">
-    <?php echo $sniglet->makeLinks(); ?></div>
-<div id ="SnigletTxt" ></div>
-<div id="searchBox">
-    <form action="sniglet_edit.php" method="GET">
-        <legend>Search Sniglets</legend>
-        <input id="searchTxt" name="searchTxt" size="30">
-        <input type="button" value="Search" onclick="search()">
-    </form>
-</div>
+<div id="links"><?php echo $sniglet->makeLinks(); ?></div>
 
+<div id ="SnigletTxt"></div>
 <div id="listArea"></div>
 <div id="resultArea"></div>
 

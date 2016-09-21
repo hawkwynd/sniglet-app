@@ -1,4 +1,11 @@
 <?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: scott
+ * Date: 5/15/13
+ * Time: 10:40 AM
+ * To change this template use File | Settings | File Templates.
+ */
 
 function redirect_to($location = NULL ) {
     if($location != NULL) {
